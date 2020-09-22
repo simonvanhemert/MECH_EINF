@@ -4,19 +4,20 @@
 # organization:   HSLU T&A
 
 ## Import Packages
-import signal, os, grovepi
+import signal
+import os
+import grovepi
 
 
 ## Definitions
 # Exit procedure in case of CTRL+C
 def receiveSignal(signalNumber, frame):
-    print "Received: ", signalNumber
-    print "Exit Python!"
+    print("Received: ", signalNumber)
+    print("Exit Python!")
     os._exit(0)
 
 
 signal.signal(signal.SIGINT, receiveSignal)
-
 
 ## Main Body
 ledbar = 5  # Connect the Grove LED Bar to digital port D5
