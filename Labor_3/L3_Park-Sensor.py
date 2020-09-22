@@ -9,8 +9,8 @@ import signal, os, grovepi
 
 ## Definitions
 def receiveSignal(signalNumber, frame):
-    print "Received: ", signalNumber
-    print "Exit Python!"
+    print("Received: ", signalNumber)
+    print("Exit Python!")
 
     # TODO: Turnoff all lights when exit
     # grovepi.ledBar_setLevel(port_ledbar, 0)
@@ -49,5 +49,5 @@ while True:
     if 0 <= lvl <= ledbar_nof_levels:
         grovepi.ledBar_setLevel(port_ledbar, lvl)
 
-    print lvl, "<->", dist
+    print(lvl, "<->", dist)
 
