@@ -4,7 +4,9 @@
 # organization:   HSLU T&A
 
 ## Import Packages
-import signal, os, grovepi
+import signal
+import os
+import grovepi
 
 
 ## Definitions
