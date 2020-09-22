@@ -22,8 +22,8 @@ signal.signal(signal.SIGINT, receiveSignal)
 
 
 ## Main Body
-port_ledbar = 000  # FIXME: Put Ledbar to grovepi digital connector 5
-port_ranger = 000  # FIXME: Put Ultra Sonic Ranger to grovepi digital connector 4
+port_ledbar = 000  # FIXME: Put Ledbar to grovepi digital connector 1
+port_ranger = 000  # FIXME: Put Ultra Sonic Ranger to grovepi digital connector 2
 
 # Initialize LED Bar
 grovepi.ledBar_init(port_ledbar, 0)
