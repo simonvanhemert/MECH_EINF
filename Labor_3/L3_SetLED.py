@@ -14,18 +14,22 @@ import grovepi
 def receiveSignal(signalNumber, frame):
     print("Received: ", signalNumber)
     print("Exit Python!")
+
+    # Turn of LED bar
+    grovepi.ledBar_setLevel(port_ledbar, 0)
+
     os._exit(0)
 
 
 signal.signal(signal.SIGINT, receiveSignal)
 
 ## Main Body
-ledbar = 5  # Connect the Grove LED Bar to digital port D5
+port_ledbar = 000  # TODO: Put Ledbar to grovepi digital connector D2
 
 # Initialize LED Bar
-grovepi.ledBar_init(ledbar, 0)
-grovepi.ledBar_orientation(ledbar, 1)
-grovepi.pinMode(ledbar, "OUTPUT")
+grovepi.ledBar_init(port_ledbar, 0)
+grovepi.ledBar_orientation(port_ledbar, 1)
+grovepi.pinMode(port_ledbar, "OUTPUT")
 
 # Continuously run the following:
 while True:
@@ -33,7 +37,7 @@ while True:
     wert = int(eingabe)
 
     if wert >= 0 or wert <= 10:
-        grovepi.ledBar_setLevel(ledbar, wert)
+        grovepi.ledBar_setLevel(port_ledbar, wert)
 
-    print		# Ausgabe des eingegebenen Wertes zwischen 0 und 10
+    print()		# TODO: print Ausgabe des eingegebenen Wertes zwischen 0 und 10
 
