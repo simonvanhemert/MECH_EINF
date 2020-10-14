@@ -20,7 +20,7 @@ def receiveSignal(signalNumber, frame):
 signal.signal(signal.SIGINT, receiveSignal)
 
 ## Main Body
-ultrasonic_ranger = 4  # Connect the Grove Ultrasonic Ranger to digital port D4
+ultrasonic_ranger = 2  # Connect the Grove Ultrasonic Ranger to digital port D2
 
 # Continuously run the following:
 while True:

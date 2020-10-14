@@ -20,7 +20,7 @@ def receiveSignal(signalNumber, frame):
 signal.signal(signal.SIGINT, receiveSignal)
 
 ## Main Body
-ledbar = 5  # Connect the Grove LED Bar to digital port D5
+ledbar = 6  # Connect the Grove LED Bar to digital port D6
 
 # Initialize LED Bar
 grovepi.ledBar_init(ledbar, 0)
@@ -35,5 +35,5 @@ while True:
     if wert >= 0 or wert <= 10:
         grovepi.ledBar_setLevel(ledbar, wert)
 
-    print		# Ausgabe des eingegebenen Wertes zwischen 0 und 10
+    print()		# TODO Ausgabe des eingegebenen Wertes zwischen 0 und 10
 
