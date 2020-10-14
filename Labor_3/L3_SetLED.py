@@ -16,7 +16,7 @@ def receiveSignal(signalNumber, frame):
     print("Exit Python!")
 
     # Turn of LED bar
-    grovepi.ledBar_setLevel(port_ledbar, 0)
+    # TODO: Set LED bar level to 0 in case of Exit Procedure
 
     os._exit(0)
 
@@ -24,7 +24,7 @@ def receiveSignal(signalNumber, frame):
 signal.signal(signal.SIGINT, receiveSignal)
 
 ## Main Body
-port_ledbar = 000  # TODO: Put Ledbar to grovepi digital connector D2
+port_ledbar = 000  # TODO: Put Ledbar to grovepi digital connector D6
 
 # Initialize LED Bar
 grovepi.ledBar_init(port_ledbar, 0)
