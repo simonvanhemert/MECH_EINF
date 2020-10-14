@@ -20,10 +20,10 @@ def receiveSignal(signalNumber, frame):
 signal.signal(signal.SIGINT, receiveSignal)
 
 ## Main Body
-ultrasonic_ranger = 2  # Connect the Grove Ultrasonic Ranger to digital port D2
+port_ranger = 000  # TODO: Put Ultra Sonic Ranger to grovepi digital connector D5
 
 # Continuously run the following:
 while True:
     # Read and print distance value from Ultrasonic
-    print(grovepi.ultrasonicRead(ultrasonic_ranger), 'cm')
+    print(grovepi.ultrasonicRead(port_ranger), 'cm')
 

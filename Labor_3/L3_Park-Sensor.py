@@ -14,18 +14,16 @@ def receiveSignal(signalNumber, frame):
     print("Received: ", signalNumber)
     print("Exit Python!")
 
-    # TODO: Turnoff all lights when exit
-    # grovepi.ledBar_setLevel(port_ledbar, 0)
+    # Turn of LED bar
+    grovepi.ledBar_setLevel(port_ledbar, 0)
 
     os._exit(0)
 
-
 signal.signal(signal.SIGINT, receiveSignal)
 
-
 ## Main Body
-port_ledbar = 000  # FIXME: Put Ledbar to grovepi digital connector 6
-port_ranger = 000  # FIXME: Put Ultra Sonic Ranger to grovepi digital connector 2
+port_ledbar = 000  # TODO: Put Ledbar to grovepi digital connector D2
+port_ranger = 000  # TODO: Put Ultra Sonic Ranger to grovepi digital connector D5
 
 # Initialize LED Bar
 grovepi.ledBar_init(port_ledbar, 0)

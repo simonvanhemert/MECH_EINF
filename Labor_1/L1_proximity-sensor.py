@@ -17,7 +17,7 @@ def receiveSignal(signalNumber, frame):
 
 signal.signal(signal.SIGINT, receiveSignal)
 
-# Connect the Proximity Sensor to analog port D2
+# Connect the Proximity Sensor to Digital port D2
 port_sensor = 2     # Connect Sensor
 signal = False
 
