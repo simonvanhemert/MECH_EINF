@@ -23,8 +23,8 @@ def receiveSignal(signalNumber, frame):
 signal.signal(signal.SIGINT, receiveSignal)
 
 ## Main Body
-port_ledbar = 000  # TODO: Put Ledbar to grovepi digital connector D6
-port_ranger = 000  # TODO: Put Ultra Sonic Ranger to grovepi digital connector D2
+port_ledbar = 0  # TODO: Put Ledbar to grovepi digital connector D6
+port_ranger = 0  # TODO: Put Ultra Sonic Ranger to grovepi digital connector D2
 
 # Initialize LED Bar
 grovepi.ledBar_init(port_ledbar, 0)

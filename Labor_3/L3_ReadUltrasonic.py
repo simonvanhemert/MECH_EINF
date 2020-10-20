@@ -20,7 +20,7 @@ def receiveSignal(signalNumber, frame):
 signal.signal(signal.SIGINT, receiveSignal)
 
 ## Main Body
-port_ranger = 000  # TODO: Put Ultra Sonic Ranger to grovepi digital connector D2
+port_ranger = 0  # TODO: Put Ultra Sonic Ranger to grovepi digital connector D2
 
 # Continuously run the following:
 while True:
