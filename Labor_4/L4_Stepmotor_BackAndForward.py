@@ -10,7 +10,6 @@ import pigpio
 import time
 import grovepi
 
-
 ## Main Body
 pi1 = pigpio.pi()
 steptime = 0.001    # Wartezeit in Sekunden bis zum naechsten Step
@@ -35,7 +34,7 @@ while sensor_value > 263 or sensor_value < 257:     # As long as the position is
     print("Fahren Sie den Schlitten auf 15.0 mm!")
     eingabe = raw_input("Ready? (Press Enter)")
     sensor_value = grovepi.analogRead(sensor)       # Read sensor value
-    print "Abstand betraegt: ", sensor_value
+    print("Abstand betraegt: ", sensor_value)
 
 try:
     while True:             # Endlosschleife

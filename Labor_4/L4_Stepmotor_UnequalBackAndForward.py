@@ -10,11 +10,10 @@ import pigpio
 import time
 import grovepi
 
-
 ## Main Body
 pi1 = pigpio.pi()
-steptime1 = 0.0005   # Wartezeit in Sekunden bis zum naechsten Step, Vorwarts
-steptime2 = 0.001    # Wartezeit in Sekunden bis zum naechsten Step, Ruckwarts
+steptime1 = 0.0005   	# Wartezeit in Sekunden bis zum naechsten Step, Vorwarts
+steptime2 = 0.001    	# Wartezeit in Sekunden bis zum naechsten Step, Ruckwarts
 
 # Pin Zuordnung
 sensor = 0              # Connect the Grove 80cm Infrared Proximity Sensor to analog port A0
@@ -27,9 +26,9 @@ D2 = 26     			# N/ -> Schaltet die Motortreiber A A/ ein
 
 # Setup Sensor
 grovepi.pinMode(sensor, "INPUT")
-adc_ref = 5         # Reference voltage of ADC is 5v
-grove_vcc = 5       # Vcc of the grove interface is normally 5v
-sensor_value = 0    # Initial sensor value
+adc_ref = 5        		# Reference voltage of ADC is 5v
+grove_vcc = 5       	# Vcc of the grove interface is normally 5v
+sensor_value = 0    	# Initial sensor value
 
 # Verfahrweg vorwaerts
 number_cycl = 5					# Anzahl cycles

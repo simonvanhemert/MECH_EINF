@@ -9,7 +9,6 @@
 import pigpio
 import time
 
-
 ## Main Body
 pi1 = pigpio.pi()
 steptime = 0.001        # Wartezeit in Sekunden bis zum naechsten Step
