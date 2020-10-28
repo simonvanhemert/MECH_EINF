@@ -16,21 +16,16 @@ def receiveSignal(signalNumber, frame):
 
     # Turn of LED bar
     # TODO: Set LED bar level to 0 in case of Exit Procedure
-
+    # TODO: Search for the method to set the LED bar level in this programm, and use that method here to set to 0
 
     os._exit(0)
 
 signal.signal(signal.SIGINT, receiveSignal)
 
 ## Main Body
-<<<<<<< Updated upstream:Labor_3/L3_Park_Sensor.py
-port_ledbar = 0  # TODO: Put Ledbar to grovepi digital connector D6
-port_ranger = 0  # TODO: Put Ultra Sonic Ranger to grovepi digital connector D2
-=======
 # TODO set the Ports to the correct value. The letter D oder A is ommited.
 port_ledbar = 0  # Put Ledbar to grovepi digital connector D2
 port_ranger = 0  # Put Ultra Sonic Ranger to grovepi digital connector D5
->>>>>>> Stashed changes:Labor_3/L3_Park-Sensor.py
 
 # Initialize LED Bar
 grovepi.ledBar_init(port_ledbar, 0)

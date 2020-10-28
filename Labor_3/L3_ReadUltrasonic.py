@@ -20,12 +20,8 @@ def receiveSignal(signalNumber, frame):
 signal.signal(signal.SIGINT, receiveSignal)
 
 ## Main Body
-<<<<<<< Updated upstream
-port_ranger = 0  # TODO: Put Ultra Sonic Ranger to grovepi digital connector D2
-=======
 # TODO set the Port to the correct value. The letter D oder A is ommited.
 port_ranger = 0  # Put Ultra Sonic Ranger to grovepi digital connector D5
->>>>>>> Stashed changes
 
 # Continuously run the following:
 while True:

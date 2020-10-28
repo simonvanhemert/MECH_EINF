@@ -17,6 +17,7 @@ def receiveSignal(signalNumber, frame):
 
     # Turn of LED bar
     # TODO: Set LED bar level to 0 in case of Exit Procedure
+    # TODO: Search for the method to set the LED bar level in this programm, and use that method here to set to 0
 
     os._exit(0)
 
@@ -24,12 +25,8 @@ def receiveSignal(signalNumber, frame):
 signal.signal(signal.SIGINT, receiveSignal)
 
 ## Main Body
-<<<<<<< Updated upstream
-port_ledbar = 0  # TODO: Put Ledbar to grovepi digital connector D6
-=======
 # TODO set the Port to the correct value. The letter D oder A is ommited.
 port_ledbar = 0     # Put Ledbar to grovepi digital connector D2
->>>>>>> Stashed changes
 
 # Initialize LED Bar
 grovepi.ledBar_init(port_ledbar, 0)
@@ -44,5 +41,7 @@ while True:
     if wert >= 0 or wert <= 10:
         grovepi.ledBar_setLevel(port_ledbar, wert)
 
-    print()		# TODO: print Ausgabe des eingegebenen Wertes zwischen 0 und 10
+    print()		# TODO: Print the given value to screen
+                # TODO: Use the print() method and the value for the distance resulting from the input.
+
 
