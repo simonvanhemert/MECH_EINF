@@ -24,7 +24,12 @@ def receiveSignal(signalNumber, frame):
 signal.signal(signal.SIGINT, receiveSignal)
 
 ## Main Body
+<<<<<<< Updated upstream
 port_ledbar = 0  # TODO: Put Ledbar to grovepi digital connector D6
+=======
+# TODO set the Port to the correct value. The letter D oder A is ommited.
+port_ledbar = 0     # Put Ledbar to grovepi digital connector D2
+>>>>>>> Stashed changes
 
 # Initialize LED Bar
 grovepi.ledBar_init(port_ledbar, 0)
