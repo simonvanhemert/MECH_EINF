@@ -15,8 +15,8 @@ def receiveSignal(signalNumber, frame):
     print("Exit Python!")
 
     # Turn of LED bar
-    # TODO: Set LED bar level to 0 in case of Exit Procedure
-    # TODO: Search for the method to set the LED bar level in this programm, and use that method here to set to 0
+    # TODO: Set LED bar level to 0 in case of Exit Procedure. Search for the method to set the LED bar level in this
+    #  programm, and use that method here to set to 0
 
     os._exit(0)
 

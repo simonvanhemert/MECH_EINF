@@ -16,8 +16,8 @@ def receiveSignal(signalNumber, frame):
     print("Exit Python!")
 
     # Turn of LED bar
-    # TODO: Set LED bar level to 0 in case of Exit Procedure
-    # TODO: Search for the method to set the LED bar level in this programm, and use that method here to set to 0
+    # TODO: Set LED bar level to 0 in case of Exit Procedure. Search for the method to set the LED bar level in
+    #  this programm, and use that method here to set to 0
 
     os._exit(0)
 
@@ -41,7 +41,7 @@ while True:
     if wert >= 0 or wert <= 10:
         grovepi.ledBar_setLevel(port_ledbar, wert)
 
-    print()		# TODO: Print the given value to screen
-                # TODO: Use the print() method and the value for the distance resulting from the input.
+    print()		# Print the given value to screen
+                # TODO: Use the print() method above to print the value for the distance resulting from the input.
 
 
