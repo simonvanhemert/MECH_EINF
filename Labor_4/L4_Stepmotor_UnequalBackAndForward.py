@@ -37,7 +37,7 @@ steps_zur = 800	 				# 200 steps entsprechen 1 Umdrehung
 steps_an_start = 5*steps_zur  	# Schlitten faehrt zurueck an die Ausgangsposition
 
 # Set the object at the right distance
-while sensor_value > 435 or sensor_value < 425:     # As long as the position is not good:
+while sensor_value < 250 or sensor_value > 270:     # while the position is outside this region:
 	print("Fahren Sie den Schlitten auf 15.0 mm!")
 	eingabe = input("Ready? (Press Enter)")
 	sensor_value = grovepi.analogRead(sensor)       # Read sensor value

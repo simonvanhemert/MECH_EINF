@@ -30,7 +30,7 @@ grove_vcc = 5       # Vcc of the grove interface is normally 5v
 sensor_value = 0    # Initial sensor value
 
 # Set the object at the right distance
-while sensor_value > 263 or sensor_value < 257:     # As long as the position is not good:
+while sensor_value < 250 or sensor_value > 270:     # while the position is outside this region:
     print("Fahren Sie den Schlitten auf 15.0 mm!")
     eingabe = input("Ready? (Press Enter)")
     sensor_value = grovepi.analogRead(sensor)       # Read sensor value
