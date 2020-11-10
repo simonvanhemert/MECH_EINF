@@ -29,9 +29,9 @@ grove_vcc = 5       # Vcc of the grove interface is normally 5v
 sensor_value = 0    # Initial sensor value
 
 # Set the object at the right distance
-while sensor_value > 263 or sensor_value < 258:     # As long as the position is not good: 435   425
+while sensor_value > 263 or sensor_value < 258:     # As long as the position is not
     print("Fahren Sie den Schlitten auf 15.0 mm!")
-    eingabe = raw_input("Ready? (Press Enter)")
+    eingabe = input("Ready? (Press Enter)")
     sensor_value = grovepi.analogRead(sensor)       # Read sensor value
     print("Abstand betraegt: ", sensor_value)
 
@@ -62,7 +62,7 @@ try:
         # Motortreiber ausschalten -> 0
         pi1.write(D2, 0)
 
-        eingabe = raw_input("Messung wiederholen? (Press Enter for yes)")
+        eingabe = input("Messung wiederholen? (Press Enter for yes)")
 
 except KeyboardInterrupt:
     pass

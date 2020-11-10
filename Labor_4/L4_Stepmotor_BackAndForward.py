@@ -32,7 +32,7 @@ sensor_value = 0    # Initial sensor value
 # Set the object at the right distance
 while sensor_value > 263 or sensor_value < 257:     # As long as the position is not good:
     print("Fahren Sie den Schlitten auf 15.0 mm!")
-    eingabe = raw_input("Ready? (Press Enter)")
+    eingabe = input("Ready? (Press Enter)")
     sensor_value = grovepi.analogRead(sensor)       # Read sensor value
     print("Abstand betraegt: ", sensor_value)
 
@@ -92,7 +92,7 @@ try:
         pi1.write(D1, 0)
         pi1.write(D2, 0)
         
-        eingabe = raw_input("Messung wiederholen? (Press Enter for yes)")
+        eingabe = input("Messung wiederholen? (Press Enter for yes)")
 
 except KeyboardInterrupt:
     pass

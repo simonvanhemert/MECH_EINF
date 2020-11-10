@@ -23,14 +23,9 @@ pi1.write(D2, 1)
 
 print("Press Ctrl+C to interrupt")
 
-try:
-    while True: 		        # Endlosschleife
-        pi1.write(A1, 0) 	    # Schaltet A1 aus
-        pi1.write(A2, 0) 	    # Schaltet A2 aus
-        time.sleep(waittime)
-
-except KeyboardInterrupt:
-    pass
+pi1.write(A1, 0)  # Schaltet A1 aus
+pi1.write(A2, 0)  # Schaltet A2 aus
+time.sleep(waittime)
 
 # Motortreiber ausschalten -> 0
 pi1.write(D2, 0)

@@ -23,7 +23,7 @@ D2 = 26                 # N/ -> Schaltet die Motortreiber A A/ ein
 
 try:
     while True:     # Endlosschleife
-        eingabe = raw_input("Richtung waehlen ([r] rueckwaerts / [v] vorwaerts: ")
+        eingabe = input("Richtung waehlen ([r] rueckwaerts / [v] vorwaerts: ")
         print("Mit Ctrl + C beenden")
       
         if eingabe == 'v':

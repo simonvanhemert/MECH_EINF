@@ -21,9 +21,8 @@ D1 = 12     # N  -> Schaltet die Motortreiber B B/ ein
 D2 = 26     # N/ -> Schaltet die Motortreiber A A/ ein
 
 # Motortreiber einschalten -> 1
-# TODO um die Motortreiber einzuschalten, muss die Wert fur D1 und D2 1 sein.
-pi1.write(D1, 0)
-pi1.write(D2, 0)
+pi1.write(D1, 1)
+pi1.write(D2, 1)
 
 print("Press Ctrl+C to interrupt")
 

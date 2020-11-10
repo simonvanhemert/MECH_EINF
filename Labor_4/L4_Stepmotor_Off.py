@@ -28,18 +28,13 @@ pi1.write(D2, 1)
 
 print("Press any key to interrupt...")
 
-try:
-    while True: 			    # Endlosschleife
-        pi1.write(B1, 0) 		# Schaltet B aus
-        pi1.write(B2, 0) 		# Schaltet B/ aus
-        time.sleep(waittime) 	# Wartezeit in Sekunden bis zum naechsten Step
+pi1.write(B1, 0)  # Schaltet B aus
+pi1.write(B2, 0)  # Schaltet B/ aus
+time.sleep(waittime)  # Wartezeit in Sekunden bis zum naechsten Step
 
-        pi1.write(A1, 0)		# Schaltet A aus
-        pi1.write(A2, 0)		# Schaltet A/ aus
-        time.sleep(waittime)    # Wartezeit in Sekunden bis zum naechsten Step
-
-except KeyboardInterrupt:
-    pass
+pi1.write(A1, 0)  # Schaltet A aus
+pi1.write(A2, 0)  # Schaltet A/ aus
+time.sleep(waittime)  # Wartezeit in Sekunden bis zum naechsten Step
 
 # Motortreiber ausschalten -> 0
 pi1.write(D1, 0)

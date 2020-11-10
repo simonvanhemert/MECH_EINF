@@ -35,7 +35,7 @@ try:
     # Kalibrierkennlinie aufnehmen in 5 mm Schritten
     while x > 25:        # Minimaldistanz in mm,
         ausgabe = "Fahre auf " + str(x) + " mm  (Mit Enter bestaetigen)"
-        eingabe = raw_input(ausgabe)
+        eingabe = input(ausgabe)
         i = 0
         voltage_average = 0
         while i < 200:
