@@ -36,9 +36,9 @@ try:
         voltage = round(float(sensor_value_average) * adc_ref / 1024, 3)
 
         # Distanz wird berechnet mit den Koeffizienten der Kalibrierungskennline des IR Sensors
-        ist_distanz = round(??*voltage*voltage - ??*voltage + ??, 2)    # Koeffizienten gemaess polynomischer Trendlinie (Excel)
+        ist_distanz = round(44.593*voltage*voltage - 152.73*voltage + 159.38, 2)    # Koeffizienten gemaess polynomischer Trendlinie (Excel)
  
-        print("ist: " + str(ist_distanz) + " mm")
+        print("Spannung ist", voltage, "\nDistanz ist: " + str(ist_distanz) + " mm")
         time.sleep(1)
 
 except KeyboardInterrupt:

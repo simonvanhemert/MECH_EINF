@@ -53,13 +53,13 @@ try:
 
         # Save results in CSV file
         csvresult = open("/home/stud/mech/sensorkalibrierung.csv", "a")
-        csvresult.write(str(v) + ";" + str(x) + "\n")
+        csvresult.write(str(v) + "; " + str(x) + "\n")
         csvresult.close
 
         # Turn on Motor
         pi1.write(D2, 1)
-        pi1.write(A1, 1)
-        pi1.write(A2, 0)
+        pi1.write(A1, 0)
+        pi1.write(A2, 1)
 
         # Wait
         time.sleep(0.33)        # Einschaltzeit des Motors in s => entspricht ca. 5 mm Verfahrweg
