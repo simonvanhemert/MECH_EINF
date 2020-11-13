@@ -26,11 +26,11 @@ D2 = 26     # N/ -> Schaltet die Motortreiber A A/ ein
 """ Einstellungen """
 # Verstaerkungsfaktor
 k = 5                   # Standard 5
-# Anzahl Distanzmessungen über welche der Mittelwert genommen wird
+# Anzahl Distanzmessungen [] über welche der Mittelwert genommen wird
 anzahlmessungen = 10    # Standard = 10
-# Wartezeit Zwischen Regelpunkt [s]
+# Wartezeit Zwischen Regelpunkte [s]
 t_wart = 0.5            # Standard = 0.5
-#  Offset zu ausgegebenen geschwindigkeit, in bereich 0 - 255
+#  Offset zu ausgegebenen [12V / 255] geschwindigkeit, in bereich 0 - 255
 offset = 10             # Standard = 10
 
 
@@ -68,19 +68,20 @@ try:
 
         # Distanz wird berechnet anhand der Kalibrierungskennlinie
         voltage = round(float(sensor_value_average) * adc_ref / 1024, 3)
-        ist_distanz = round(44.593*voltage*voltage - 152.73*voltage + 159.38, 2)    # Koeffizienten gemaess polynomischer Trendlinie (Excel)
+        # Koeffizienten gemaess polynomischer Trendlinie (Excel)
+        ist_distanz = round(44.593*voltage*voltage - 152.73*voltage + 159.38, 2)
 
         print("ist:  " + str(ist_distanz) + " mm")
         print("soll: " + str(soll_distanz) + " mm")
 
 
         """ Ab hier wird die ist-Distanz mit der soll-Distanz verglichen, und die Regler eingestellt """
-        delta_distanz = soll_distanz - ist_distanz  # Differenz von soll und ist
+        delta_distanz = soll_distanz - ist_distanz  # Regelabweichung
         print("delta: " + str(delta_distanz) + " mm")
 
         y = delta_distanz * k   # Multiplizieren mit Verstaerkungsfaktor
 
-        # Set Duty cycle, between 0 and 255
+        # Geschwindigkeit einstellen durch Duty cycle, zwischen 0 und 255
         dutycycle = int(abs(y) + offset)
         if dutycycle < 0:
             dutycycle = 0
@@ -107,7 +108,7 @@ try:
 
 
         """ Ab hier werden die Zeit und der Position gespeichert """
-        # # Save results to CSV file
+        # Save results to CSV file
         csvresult = open("/home/stud/mech/wegdiagramm_drehzahl.csv", "a")
         csvresult.write(str(round(zeit, 4)) + "," + str(round(ist_distanz, 4)) + "\n")
         csvresult.close

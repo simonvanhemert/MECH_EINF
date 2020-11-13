@@ -33,7 +33,7 @@ anzahlmessungen = 10    # Standard = 10
 
 
 """ Initialisierung """
-# Set Duty cycle, between 0 and 255
+# Geschwindigkeit einstellen durch Duty cycle, zwischen 0 und 255
 dutycycle = int(geschwindigkeit*255)
 
 # Eingabe soll-Distanz
@@ -80,7 +80,7 @@ try:
         delta_distanz = soll_distanz - ist_distanz  # Regelabweichung
         print("delta: " + str(delta_distanz) + " mm")
 
-        y = delta_distanz * k  # Multiplizieren mit Verstaerkungsfaktor, y gibt Vorzeichen fuer Drehrichtung an
+        y = delta_distanz * k  # Multiplizieren mit Verstaerkungsfaktor
 
         t_ein = abs(y)        # Einschaltzeit des Motors, Betrag von y
 
