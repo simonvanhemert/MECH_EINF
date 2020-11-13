@@ -40,9 +40,10 @@ eingabe = input("Auf welche Distanz soll gefahren werden?\nWert zwischen 30 und 
 soll_distanz = float(eingabe)
 
 # Save results to CSV file, write titles
-csvresult = open("/home/stud/mech/wegdiagramm_drehzahl.csv", "w")
+datei = "/home/stud/mech/wegdiagramm_drehzahl" + str(time.asctime(time.localtime(time.time()))).replace(":", "_") + ".csv"
+csvresult = open(datei, "w")
 csvresult.write("time (s)" + ", " + "ist_distanz (mm)" + "\n")
-csvresult.close
+csvresult.close()
 
 zeit = 0
 
@@ -109,9 +110,9 @@ try:
 
         """ Ab hier werden die Zeit und der Position gespeichert """
         # Save results to CSV file
-        csvresult = open("/home/stud/mech/wegdiagramm_drehzahl.csv", "a")
+        csvresult = open(datei, "a")
         csvresult.write(str(round(zeit, 4)) + "," + str(round(ist_distanz, 4)) + "\n")
-        csvresult.close
+        csvresult.close()
 
 
         """ Zeit Messung wird durchgeführt und die Zeit wir angepasst"""
