@@ -19,7 +19,10 @@ adc_ref = 5         # Reference voltage of ADC is 5v
 grove_vcc = 5       # Vcc of the grove interface is normally 5v
 sensor_value = 0    # Initialwert, Variable fuer Abstandserkennung
 
-x = 65               # Maximaldistanz in mm zur Aufnahme der Kalibrierkennlinie
+xmax = 65                   # Maximaldistanz in mm zur Aufnahme der Kalibrierkennlinie
+xmin = 25                   # Minimaldistanz in mm
+nmessung = (65-25)/5 + 1    # Anzahl messungen pro durchfuehrungen
+ndurchf = 2                 # Anzahl durchfuehrungen
 
 # Pin Zuordnung
 A1 = 20             # Anschluss M1
@@ -31,9 +34,11 @@ csvresult = open("/home/stud/mech/sensorkalibrierung.csv", "a")  # Allenfalls is
 csvresult.write("Spannung (V);Abstand (mm)" + "\n")
 csvresult.close
 
+x = xmax  # Set x auf max distanz
+Anfahren = True         # Start with moving towards sensor.
 try:
-    # Kalibrierkennlinie aufnehmen in 5 mm Schritten
-    while x > 25:        # Minimaldistanz in mm,
+    for messung in range(ndurchf*nmessung):   # Loop over all measurements
+        # Kalibrierkennlinie aufnehmen in 5 mm Schritten
         ausgabe = "Fahre auf " + str(x) + " mm  (Mit Enter bestaetigen)"
         eingabe = input(ausgabe)
         i = 0
@@ -70,8 +75,19 @@ try:
         pi1.write(A1, 0)
         pi1.write(A2, 0)
 
-        # Change loop variable, around 5 mm moved.
-        x = x - 5
+        # Change loop variable, 5 mm moved.
+        if Anfahren:
+            if x > xmin:        # Wann noch nicht bei minimal distanz, 5 mm ahnfahren
+                x -= 5          # 5 mm anfahren
+            elif x == xmin:
+                x = x           # 2e messpunkt bei minimaldistanz
+                Anfahren = False    # Start moving away
+        else:                   # Wann also weggefahren wird:
+            if x < xmax:        # Wann noch nicht beim maximal Distanz:
+                x += 5          # 5 mm wegfahren
+            elif x == xmax:
+                x = x           # 2e messpunkt bei maximaldistanz
+                Anfahren = True     # Wieder anfahren
 
 except KeyboardInterrupt:
     pass
