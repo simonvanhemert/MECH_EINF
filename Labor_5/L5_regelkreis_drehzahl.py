@@ -68,9 +68,9 @@ try:
         sensor_value_average = sensor_value_total / anzahlmessungen
 
         # Distanz wird berechnet anhand der Kalibrierungskennlinie
-        voltage = round(float(sensor_value_average) * adc_ref / 1024, 3)
+        voltage = round(float(sensor_value_average) * adc_ref / 1024, 4)
         # Koeffizienten gemaess polynomischer Trendlinie (Excel)
-        ist_distanz = round(44.593*voltage*voltage - 152.73*voltage + 159.38, 2)
+        ist_distanz = round(44.593*voltage*voltage - 152.73*voltage + 159.38, 4)
 
         print("ist:  " + str(ist_distanz) + " mm")
         print("soll: " + str(soll_distanz) + " mm")

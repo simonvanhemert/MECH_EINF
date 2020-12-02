@@ -19,10 +19,10 @@ adc_ref = 5         # Reference voltage of ADC is 5v
 grove_vcc = 5       # Vcc of the grove interface is normally 5v
 sensor_value = 0    # Initialwert, Variable fuer Abstandserkennung
 
-xmax = 65                   # Maximaldistanz in mm zur Aufnahme der Kalibrierkennlinie
-xmin = 25                   # Minimaldistanz in mm
-nmessung = (65-25)/5 + 1    # Anzahl messungen pro durchfuehrungen
-ndurchf = 2                 # Anzahl durchfuehrungen
+xmax = 65                       # Maximaldistanz in mm zur Aufnahme der Kalibrierkennlinie
+xmin = 25                       # Minimaldistanz in mm
+nmessung = int((65-25)/5 + 1)   # Anzahl messungen pro durchfuehrungen
+ndurchf = 2                     # Anzahl durchfuehrungen
 
 # Pin Zuordnung
 A1 = 20             # Anschluss M1

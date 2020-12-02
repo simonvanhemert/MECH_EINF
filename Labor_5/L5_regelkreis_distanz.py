@@ -69,12 +69,12 @@ try:
         sensor_value_average = sensor_value_total / anzahlmessungen
 
         # Distanz wird berechnet mit den Koeffizienten der Kalibrierungskennlinie des IR Sensors
-        voltage = round(float(sensor_value_average) * adc_ref / 1024, 2)
+        voltage = round(float(sensor_value_average) * adc_ref / 1024, 4)
         # Koeffizienten gemaess polynomischer Trendlinie (Excel):
-        ist_distanz = round(44.593*voltage*voltage - 152.73*voltage + 159.38, 2)
+        ist_distanz = round(44.593*voltage*voltage - 152.73*voltage + 159.38, 4)
 
-        print("ist:   " + str(round(ist_distanz, 4)) + " mm")
-        print("soll:  " + str(round(soll_distanz, 4)) + " mm")
+        print("ist:   " + str(ist_distanz) + " mm")
+        print("soll:  " + str(soll_distanz) + " mm")
 
 
         """ Ab hier wird die ist-Distanz mit der soll-Distanz verglichen, und die Regler eingestellt """
