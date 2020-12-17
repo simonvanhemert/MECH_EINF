@@ -1,7 +1,7 @@
-# Labor 3, Parksensor, MECH_EINF Module WI HSLU T&A
-# author:         Raphael Andonie, Simon van Hemert
-# date:           2020-04-06
-# organization:   HSLU T&A
+""" Labor 3, Parksensor, MECH_EINF Module WI HSLU T&A
+    author:         Raphael Andonie, Simon van Hemert
+    date:           2020-04-06
+    organization:   HSLU T&A """
 
 ## Import Packages
 import signal
@@ -9,39 +9,46 @@ import os
 import grovepi
 
 
-## Definitions
-# Exit procedure in case of CTRL+C
+""" Initialization """
 def receiveSignal(signalNumber, frame):
+    """ When any error signal is received:
+    - print signal number,
+    - turn of ledBar,
+    - and exit """
     print("Received: ", signalNumber)
     print("Exit Python!")
-
     # Turn of LED bar
-    # TODO: Set LED bar level to 0 in case of Exit Procedure. Search for the method to set the LED bar level in
-    #  this programm, and use that method here to set to 0
-
+    grovepi.ledBar_setLevel(port_ledbar, 0)
     os._exit(0)
 
 
+# When a signal is received, activate the (above) receiveSignal method.
 signal.signal(signal.SIGINT, receiveSignal)
 
-## Main Body
-# TODO set the Port to the correct value. The letter D oder A is ommited.
-port_ledbar = 0     # Put Ledbar to grovepi digital connector D2
+# Set sensor ports and settings
+port_ledbar = 2     # Put Ledbar to grovepi digital connector D2
 
 # Initialize LED Bar
 grovepi.ledBar_init(port_ledbar, 0)
 grovepi.ledBar_orientation(port_ledbar, 1)
 grovepi.pinMode(port_ledbar, "OUTPUT")
 
-# Continuously run the following:
+# Settings
+ledbar_nof_levels = 10      # Number of LEDs
+
+
+""" Endless loop """
+print("Start Event Log ...")
 while True:
-    eingabe = input('Geben sie einen Wert zwischen 0 und 10 ein: ')
-    wert = int(eingabe)
+    # Ask for a user input between 0 and 10
+    userinput = input('Geben sie einen Wert zwischen 0 und 10 ein: ')
+    # Save as integer
+    userinput = int(userinput)
 
-    if wert >= 0 or wert <= 10:
-        grovepi.ledBar_setLevel(port_ledbar, wert)
+    # Set ledbar level
+    if userinput >= 0 or userinput <= ledbar_nof_levels:
+        grovepi.ledBar_setLevel(port_ledbar, userinput)
 
-    print()		# Print the given value to screen
-                # TODO: Use the print() method above to print the value for the distance resulting from the input.
+    print(userinput)		# Print the given value to screen
 
 

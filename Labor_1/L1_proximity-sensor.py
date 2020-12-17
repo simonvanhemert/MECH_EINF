@@ -5,27 +5,36 @@
 
 ## Import Packages
 import os
-import signal
 import grovepi
+import signal
 
 
-# Definition for recieved exit or error signal:
+""" Initialization """
 def receiveSignal(signalNumber, frame):
+    """ When any error signal is received,
+    - print signal number,
+    - and exit """
     print("Received: ", signalNumber)
     print("Exit Python!")
     os._exit(0)
 
+
+# When a signal is received, activate the (above) receiveSignal method.
 signal.signal(signal.SIGINT, receiveSignal)
 
-# Connect the Proximity Sensor to Digital port D2
-port_sensor = 2     # Connect Sensor
-signal = False
+# Set sensor ports and settings
+port_sensor = 2     # Connect Sensor to Digital port D2
+sensorsignal = False
 
 grovepi.pinMode(port_sensor, "INPUT")
 
-print("Start Event Log ...")
 
+""" Endless loop """
+print("Start Event Log ...")
 while True:
-    if signal != grovepi.digitalRead(port_sensor):
-        signal = not signal
-        print("Signal : ", "[", signal, "]")
+    # When the last signal is not equal to the current signal
+    if sensorsignal != grovepi.digitalRead(port_sensor):
+        # Set the signal to the current signal
+        sensorsignal = grovepi.digitalRead(port_sensor)
+        # Print the change of signal
+        print("Signal : ", "[", sensorsignal, "]")

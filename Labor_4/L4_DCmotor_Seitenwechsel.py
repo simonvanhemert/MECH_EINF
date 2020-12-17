@@ -1,43 +1,61 @@
-# Labor 4, Umkehrspiel, MECH_EINF Module WI HSLU T&A
-# author:         Raphael Andonie, Simon van Hemert
-# date:           2020-04-06
-# organization:   HSLU T&A
+""" Labor 4, Umkehrspiel, MECH_EINF Module WI HSLU T&A
+    author:         Raphael Andonie, Simon van Hemert
+    date:           2020-04-06
+    organization:   HSLU T&A """
 
-# TODO !!! Vor dem eigentlichen Starten des Programmes muss zuerst folgender Befehl ohne Klammern ausgefuehrt werden (sudo pigpiod) !!!
+# TODO !!! Vor dem eigentlichen Starten des Programmes muss zuerst folgender Befehl ausgefuehrt werden: sudo pigpiod
 
 ## Import Packages
 import pigpio
 import time
+import signal
+from Motor_Off import turn_motor_off
 
-## Main Body
-pi1 = pigpio.pi()   # Erstellt ein Objekt der Klasse pi
-t_ein = 2           # Dauer des eingeschaltenen Motors
 
-# Pin Zuordnung
-A1 = 20  # A  oder M1
-A2 = 21  # A/ oder M2
-D2 = 26  # N/ -> Schaltet die Motortreiber A A/ ein
+""" Initialization """
+def receiveSignal(signalNumber, frame):
+    """ When any error signal is received:
+    - print signal number,
+    - turn of Motor,
+    - and exit """
+    print("Received: ", signalNumber)
+    print("Exit Python!")
+    turn_motor_off()          # Turn off DCmotor
+    os._exit(0)
 
-# Motortreiber einschalten -> 1
+
+# When a signal is received, activate the (above) receiveSignal method.
+signal.signal(signal.SIGINT, receiveSignal)
+
+# Initialize Grovepi
+pi1 = pigpio.pi()
+
+# Set ports
+A1 = 20         # A  or M1
+A2 = 21         # A/ or M2
+D2 = 26         # N/ ->Turn on the motordriver A A/ ein
+
+# Settings
+drivetime = 2   # Time [s] for which to drive in each direction
+
+# Turn on the motordriver -> 1
 pi1.write(D2, 1)
 
+
+""" Endless loop """
+print("Start Event Log ...")
 print("Press Ctrl+C to interrupt")
-
 try:
-    while True:             # Endlosschleife
-        pi1.write(A1, 1)    # Schaltet A1 ein
-        pi1.write(A2, 0)    # Schaltet A2 aus
-        time.sleep(t_ein)   # Motor fuer t_ein eingeschalten
+    while True:
+        pi1.write(A1, 1)        # Set channel A1
+        pi1.write(A2, 0)        # Set channel A2
+        time.sleep(drivetime)   # Drive for the set drivetime
 
-        pi1.write(A1, 0)
-        pi1.write(A2, 1)
-        time.sleep(t_ein)   # Motor fuer t_ein ausgeschalten
+        pi1.write(A1, 0)        # Set channel A1
+        pi1.write(A2, 1)        # Set channel A2
+        time.sleep(drivetime)   # Drive for the set drivetime
 
 except KeyboardInterrupt:
+    # Turn off DCmotor
+    turn_motor_off()
     pass
-
-# Motortreiber ausschalten -> 0
-pi1.write(D2, 0)
-# A ausschalten
-pi1.write(A1, 0)
-pi1.write(A2, 0)
