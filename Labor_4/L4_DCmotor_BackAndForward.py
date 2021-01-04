@@ -1,5 +1,5 @@
 """ Labor 4, Umkehrspiel, MECH_EINF Module WI HSLU T&A
-    author:         Raphael Andonie, Simon van Hemert
+    author:         Simon van Hemert
     date:           2020-04-06
     organization:   HSLU T&A """
 
@@ -29,28 +29,30 @@ def receiveSignal(signalNumber, frame):
 signal.signal(signal.SIGINT, receiveSignal)
 
 # Initialize Grovepi
-pi1 = pigpio.pi()
+pi1 = pigpio.pi()   # Creates an Object from pi-class.
 
 # Set ports
 sensor = 0  # Connect the Grove 80cm Infrared Proximity Sensor to analog port A0
 A1 = 20     # A  or M1
 A2 = 21     # A/ or M2
-D2 = 26     # N/ -> Turn on the motordriver A A/ ein
+D2 = 26     # N/ -> Turn on the motordriver A A/
 
 # Setup Sensor
 grovepi.pinMode(sensor, "INPUT")
-adc_ref = 5         # Reference voltage of ADC is 5v
-grove_vcc = 5       # Vcc of the grove interface is normally 5v
+adc_ref = 5         # Reference voltage of ADC is 5 [V]
+grove_vcc = 5       # Vcc of the grove interface is normally 5 [V]
 sensor_value = 0    # Initial sensor value
 
 # Settings
 drivetime = 2       # Time [s] for which to drive in each direction
 stoptime = 0.5      # Pause [s] between driving back and forth
+sensor_min = 250    # minimal sensor value [*10 mm]
+sensor_max = 270    # maximal sensor value [*10 mm]
 
 
 """ Set the object at the right distance """
 # while the position is outside this region:
-while sensor_value < 250 or sensor_value > 270:
+while sensor_value < sensor_min or sensor_value > sensor_max:
     # Ask for any user input to continue
     print("Fahren Sie den Schlitten auf 15.0 mm!")
     userinput = input("Ready? (Press Enter)")

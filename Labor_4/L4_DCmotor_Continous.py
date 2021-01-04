@@ -1,13 +1,12 @@
 """ Labor 4, Umkehrspiel, MECH_EINF Module WI HSLU T&A
-    author:         Raphael Andonie, Simon van Hemert
+    author:         Simon van Hemert
     date:           2020-04-06
     organization:   HSLU T&A """
 
 # TODO !!! Vor dem eigentlichen Starten des Programmes muss zuerst folgender Befehl ausgefuehrt werden: sudo pigpiod
 
-##Import Packages
+## Import Packages
 import pigpio
-import time
 import signal
 from Motor_Off import turn_motor_off
 
@@ -28,29 +27,27 @@ def receiveSignal(signalNumber, frame):
 signal.signal(signal.SIGINT, receiveSignal)
 
 # Initialize Grovepi
-pi1 = pigpio.pi()   # Erstellt ein Objekt der Klasse pi
+pi1 = pigpio.pi()   # Creates an Object from pi-class.
 
 # Set ports
 A1 = 20         # A  or M1
 A2 = 21         # A/ or M2
-D2 = 26         # N/ ->Turn on the motordriver A A/ ein
-
-# Motortreiber einschalten -> 1
-pi1.write(D2, 1)
-
-# Settings
-waittime = 0.001    # Pause im Programmcode, um das Einlesen des KeyboardInterrupt zu ermoeglichen
+D2 = 26         # N/ -> Turn on the motordriver A A/
 
 
-""" Endless loop """
-print("Start Event Log ...")
-print("Press Ctrl+C to interrupt")
+""" Run Motor """
 try:
-    while True:
-        pi1.write(A1, 1)        # Set channel A1
-        pi1.write(A2, 0)        # Set channel A2
-        time.sleep(waittime)    # Wait for the set waittime
+    # Turn on Motordriver -> 1
+    pi1.write(D2, 1)
+
+    # Turn on Motor
+    pi1.write(A1, 1)        # Set channel A1
+    pi1.write(A2, 0)        # Set channel A2
+
+    # Ask for any user input to Quit
+    userinput = input("Stop motor? (Press Enter for yes)")
 except KeyboardInterrupt:
-    # Turn off DCmotor
-    turn_motor_off()
     pass
+
+# Turn off DCmotor
+turn_motor_off()

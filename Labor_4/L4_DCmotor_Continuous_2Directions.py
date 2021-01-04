@@ -28,12 +28,12 @@ def receiveSignal(signalNumber, frame):
 signal.signal(signal.SIGINT, receiveSignal)
 
 # Initialize Grovepi
-pi1 = pigpio.pi()
+pi1 = pigpio.pi()    # Creates an Object from pi-class.
 
 # Set ports
 A1 = 20         # A  or M1
 A2 = 21         # A/ or M2
-D2 = 26         # N/ ->Turn on the motordriver A A/ ein
+D2 = 26         # N/ -> Turn on the motordriver A A/
 
 # Settings
 drivetime = 2   # Time [s] for which to drive in each direction
@@ -49,11 +49,11 @@ try:
     while True:
         pi1.write(A1, 1)        # Set channel A1
         pi1.write(A2, 0)        # Set channel A2
-        time.sleep(drivetime)   # Drive for the set drivetime
+        time.sleep(drivetime)   # Drive for the set drivetime [s]
 
         pi1.write(A1, 0)        # Set channel A1
         pi1.write(A2, 1)        # Set channel A2
-        time.sleep(drivetime)   # Drive for the set drivetime
+        time.sleep(drivetime)   # Drive for the set drivetime [s]
 
 except KeyboardInterrupt:
     # Turn off DCmotor

@@ -1,55 +1,78 @@
-# Labor 5, Regelkreis, MECH_EINF Module WI HSLU T&A
-# author:         Raphael Andonie, Simon van Hemert
-# date:           2020-04-22
-# organization:   HSLU T&A
+""" Labor 5, Regelkreis, MECH_EINF Module WI HSLU T&A
+    author:         Simon van Hemert
+    date:           2020-04-22
+    organization:   HSLU T&A """
+
+# TODO !!! Vor dem eigentlichen Starten des Programmes muss zuerst folgender Befehl ausgefuehrt werden: sudo pigpiod
 
 ## Import Packages
 import pigpio
+import signal
 import time
-import grovepi
+from Motor_Off import turn_motor_off
 
-## Main body
-pi1 = pigpio.pi()   # Objekt der Klasse pi erstellen
 
-# Infrarot Sensor konfigurieren
-sensor = 0
+""" Initialization """
+def receiveSignal(signalNumber, frame):
+    """ When any error signal is received:
+    - print signal number,
+    - turn of Motor,
+    - and exit """
+    print("Received: ", signalNumber)
+    print("Exit Python!")
+    turn_motor_off()          # Turn off DCmotor
+    os._exit(0)
+
+
+# When a signal is received, activate the (above) receiveSignal method.
+signal.signal(signal.SIGINT, receiveSignal)
+
+# Initialize Grovepi
+pi1 = pigpio.pi()   # Creates an Object from pi-class.
+
+# Set ports
+sensor = 0  # Connect the Grove 80cm Infrared Proximity Sensor to analog port A0
+A1 = 20     # A  or M1
+A2 = 21     # A/ or M2
+D2 = 26     # N/ -> Turn on the motordriver A A/
+
+# Setup Sensor
 grovepi.pinMode(sensor, "INPUT")
-adc_ref = 5 		# Reference voltage of ADC is 5v
-sensor_value = 0 	# Variable fuer Abstandserkennung
-
-# Pin Zuordnung
-A1 = 20     # Anschluss M1
-A2 = 21     # Anschluss M2
-D2 = 26     # N/ -> Schaltet die Motortreiber A A/ ein
+adc_ref = 5         # Reference voltage of ADC is 5 [V]
+grove_vcc = 5       # Vcc of the grove interface is normally 5 [V]
+sensor_value = 0    # Initial sensor value
 
 
-""" Einstellungen """
-# Verstaerkungsfaktor
+""" Settings """
+# Amplification factor k [s/mm]
 k = 0.001               # Standard 0.001
-# Geschwindigkeit
-geschwindigkeit = 0.80  # Standard = 0.80 [80%]
-# Anzahl Distanzmessungen über welche der Mittelwert genommen wird
-anzahlmessungen = 10    # Standard = 10
+# Velocity [%]
+velocity = 0.80         # Standard = 0.80 [80%]
+# Number of distance measurements [] over which to average
+nmeasurement = 10       # Standard = 10
 
 
-""" Initialisierung """
-# Geschwindigkeit einstellen durch Duty cycle, zwischen 0 und 255
-dutycycle = int(geschwindigkeit*255)
+""" Initialize """
+# Set speed by means of the pwm Duty cycle, between 0 und 255
+dutycycle = int(velocity*255)
 
-# Eingabe soll-Distanz
-eingabe = input("Auf welche Distanz soll gefahren werden?\nWert zwischen 30 mm und 60 mm: ")
-soll_distanz = float(eingabe)
+# Ask for the Set-distance
+userinput = input("Auf welche Distanz soll gefahren werden?\nWert zwischen 30 mm und 60 mm: ")
+set_distance = float(userinput)
 
-# Save results to CSV file, write titles
-datei = "/home/stud/mech/wegdiagramm_distanz" + str(time.asctime(time.localtime(time.time()))).replace(":", "_") + ".csv"
-csvresult = open(datei, "w")
-csvresult.write("time (s)" + "ist_distanz (mm)" + ", " + "\n")
-csvresult.close()
+# Save results in CSV File
+filename = "/home/stud/mech/wegdiagramm_distanz" \
+           + str(time.asctime(time.localtime(time.time()))).replace(":", "_") \
+           + ".csv"
+csvresult = open(filename, "w")                                 # Open and (over-)write ("w") file
+csvresult.write("time (s)" + "ist_distanz (mm)" + ", " + "\n")  # Write titles
+csvresult.close()                                               # Close file
 
-zeit = 0
+# Set time to 0
+time = 0
 
 
-""" Endlosschleife """
+""" Control loop """
 try:
     while True:
         # Reset values
@@ -58,71 +81,64 @@ try:
         starttime = time.time()
 
 
-        """ Ab hier wird der Abstand gemessen """
-        while i < anzahlmessungen:
+        """ Measure distance """
+        while i < nmeasurement:                         # For required measurements
             # Read sensor value
-            sensor_value = grovepi.analogRead(sensor)  # Einlesen Infrarotsensorwert
+            sensor_value = grovepi.analogRead(sensor)
             sensor_value_total += sensor_value
             i += 1
 
-        # Durchschnittswert ueber die letzten i Messwerte
-        sensor_value_average = sensor_value_total / anzahlmessungen
+        # Find average voltage
+        sensor_value_average = sensor_value_total / nmeasurement
 
-        # Distanz wird berechnet mit den Koeffizienten der Kalibrierungskennlinie des IR Sensors
+        # Convert measurement to voltage
         voltage = round(float(sensor_value_average) * adc_ref / 1024, 4)
-        # Koeffizienten gemaess polynomischer Trendlinie (Excel):
-        ist_distanz = round(44.593*voltage*voltage - 152.73*voltage + 159.38, 4)
 
-        print("ist:   " + str(ist_distanz) + " mm")
-        print("soll:  " + str(soll_distanz) + " mm")
+        # Calculate distance using sensor characteristics, coefficients found from calibration
+        is_distance = round(44.593*voltage*voltage - 152.73*voltage + 159.38, 4)
+
+        print("ist:   " + str(is_distance) + " mm")
+        print("soll:  " + str(set_distance) + " mm")
 
 
-        """ Ab hier wird die ist-Distanz mit der soll-Distanz verglichen, und die Regler eingestellt """
-        delta_distanz = soll_distanz - ist_distanz  # Regelabweichung
+        """ Compare current and set distance and set the motor accordingly """
+        delta_distance = set_distance - is_distance     # Control error
         print("delta: " + str(delta_distanz) + " mm")
 
-        y = delta_distanz * k  # Multiplizieren mit Verstaerkungsfaktor
+        drivetime = delta_distanz * k   # Multiply the found distance [mm] with the amplification k [s/mm]
+        drivetime = abs(drivetime)      # Drivetime [s] is always positive
 
-        t_ein = abs(y)        # Einschaltzeit des Motors, Betrag von y
-
-        print("t_ein: " + str(round(t_ein, 7)) + " s")
-        print("Drehrichtung: " + str(round(y, 2)))
+        print("t_ein: " + str(round(drivetime, 4)) + " s")
 
 
-        """ Ab hier wird die motor angesteuert """
-        # Motortreiber einschalten -> 1
+        """ Drive the motor for the calculated time """
+        # Turn on the motordriver -> 1
         pi1.write(D2, 1)
-        # entscheidet in welche Richtung
-        if y > 0:
+        # Set PWM depending on direction of rotation
+        if delta_distanz > 0:
             pi1.set_PWM_frequency(A1, 4000)
             pi1.set_PWM_dutycycle(A1, dutycycle)  # PWM from 0 (OFF) to 255 (FULLY ON)
             pi1.write(A2, 0)
 
-        if y < 0:
+        if delta_distanz < 0:
             pi1.write(A1, 0)
             pi1.set_PWM_frequency(A2, 4000)
             pi1.set_PWM_dutycycle(A2, dutycycle)  # PWM from 0 (OFF) to 255 (FULLY ON)
 
-        time.sleep(t_ein)  # Pause mit berechneter Laenge
+        time.sleep(drivetime)  # Drive for calculated drivetime
 
 
-        """ Ab hier werden die Zeit und der Position gespeichert """
-        # Save results to CSV file
-        csvresult = open(datei, "a")
-        csvresult.write(str(round(zeit, 4)) + "," + str(round(ist_distanz, 4)) + "\n")
-        csvresult.close()
+        """ Save position and time """
+        csvresult = open(filename, "a")                 # Open and append ("a") file
+        csvresult.write(str(round(time, 4)) + "," + str(round(is_distance, 4)) + "\n")  # Write one line of data
+        csvresult.close()                               # Close the file
 
 
-        """ Zeit Messung wird durchgeführt und die Zeit wir angepasst"""
-        elapsed = time.time() - starttime
-        zeit += elapsed
+        """ Measure elapsed time """
+        elapsed = time.time() - starttime       # Find elapsed time
+        time += elapsed                         # Update current time
 
 except KeyboardInterrupt:
+    # Turn off DCmotor
+    turn_motor_off()
     pass
-
-
-# Motortreiber ausschalten -> 0
-pi1.write(D2, 0)
-# Kanalen A ausschalten
-pi1.write(A1, 0)
-pi1.write(A2, 0)
