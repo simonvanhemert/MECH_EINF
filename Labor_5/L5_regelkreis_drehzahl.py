@@ -56,7 +56,7 @@ offset = 10             # Standard = 10
 
 """ Initialize """
 # Ask for the Set-distance
-userinput = input("Auf welche Distanz soll gefahren werden?\nWert zwischen 30 mm und 60 mm: ")
+userinput = input("Auf welche Distanz soll gefahren werden? \nWert zwischen 30 mm und 60 mm: ")
 set_distance = float(userinput)
 
 # Save results in CSV File
@@ -64,7 +64,9 @@ filename = "/home/stud/mech/wegdiagramm_drehzahl" \
            + str(time.asctime(time.localtime(time.time()))).replace(":", "_") \
            + ".csv"
 csvresult = open(filename, "w")                                 # Open and (over-)write ("w") file
-csvresult.write("time (s)" + "ist_distanz (mm)" + ", " + "\n")  # Write titles
+csvresult.write("k= " + str(k) + "nmeasurement= " + str(nmeasurement) + "waittime= " + str(waittime)
+                + "offset= " + str(offset) + "set_distance= " + set_distance + "; " + "\n")     # Write set constants
+csvresult.write("time (s); ist_distanz (mm)" + "\n")            # Write titles
 csvresult.close()                                               # Close file
 
 # Set time to 0
@@ -134,7 +136,7 @@ try:
 
         """ Save position and time """
         csvresult = open(filename, "a")                 # Open and append ("a") file
-        csvresult.write(str(round(time, 4)) + "," + str(round(is_distance, 4)) + "\n")  # Write one line of data
+        csvresult.write(str(round(time, 4)) + ";" + str(round(is_distance, 4)) + "\n")  # Write one line of data
         csvresult.close()                               # Close the file
 
 

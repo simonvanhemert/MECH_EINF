@@ -65,7 +65,9 @@ filename = "/home/stud/mech/wegdiagramm_distanz" \
            + str(time.asctime(time.localtime(time.time()))).replace(":", "_") \
            + ".csv"
 csvresult = open(filename, "w")                                 # Open and (over-)write ("w") file
-csvresult.write("time (s)" + "ist_distanz (mm)" + ", " + "\n")  # Write titles
+csvresult.write("k= " + str(k) + "velocity= " + str(velocity) + "nmeasurement= " + str(nmeasurement)
+                + "set_distance= " + set_distance + "; " + "\n")     # Write set constants
+csvresult.write("time (s); ist_distanz (mm)" + "\n")  # Write titles
 csvresult.close()                                               # Close file
 
 # Set time to 0
@@ -130,7 +132,7 @@ try:
 
         """ Save position and time """
         csvresult = open(filename, "a")                 # Open and append ("a") file
-        csvresult.write(str(round(time, 4)) + "," + str(round(is_distance, 4)) + "\n")  # Write one line of data
+        csvresult.write(str(round(time, 4)) + ";" + str(round(is_distance, 4)) + "\n")  # Write one line of data
         csvresult.close()                               # Close the file
 
 
