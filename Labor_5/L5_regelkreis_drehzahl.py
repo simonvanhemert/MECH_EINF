@@ -8,8 +8,9 @@
 ## Import Packages
 import pigpio
 import signal
+import grovepi
 import time
-from Motor_Off import turn_motor_off
+from Motor_Off import *
 
 
 """ Initialization """

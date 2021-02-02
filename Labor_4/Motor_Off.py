@@ -8,7 +8,6 @@ import pigpio
 
 class Motor_Off:
     """ Class to correctly turn of the DC motor oder Stepper motor """
-    @staticmethod
     def turn_motor_off():
         """ Definition to turn of the motor driver channels and drivers """
         pi1 = pigpio.pi()       # Create an object of class pi

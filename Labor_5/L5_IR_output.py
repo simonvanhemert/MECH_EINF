@@ -6,10 +6,9 @@
 # TODO !!! Vor dem eigentlichen Starten des Programmes muss zuerst folgender Befehl ausgefuehrt werden: sudo pigpiod
 
 ## Import Packages
-import pigpio
+import grovepi
 import signal
 import time
-from Motor_Off import turn_motor_off
 
 
 """ Initialization """
@@ -20,7 +19,6 @@ def receiveSignal(signalNumber, frame):
     - and exit """
     print("Received: ", signalNumber)
     print("Exit Python!")
-    turn_motor_off()          # Turn off DCmotor
     os._exit(0)
 
 
@@ -58,7 +56,7 @@ try:
         is_distance = round(44.593*voltage*voltage - 152.73*voltage + 159.38, 2)
 
         # Print output and pause
-        print("Spannung ist", voltage, "\nDistanz ist: " + str(ist_distanz) + " mm")
+        print("Spannung ist", voltage, "\nDistanz ist: " + str(is_distance) + " mm")
         time.sleep(0.5)
 
 except KeyboardInterrupt:
