@@ -18,13 +18,11 @@ def receiveSignal(signalNumber, frame):
     print("Exit Python!")
     os._exit(0)
 
-
 # When a signal is received, activate the (above) receiveSignal method.
 signal.signal(signal.SIGINT, receiveSignal)
 
 # Set sensor ports and settings
 port_sensor = 2     # Connect Sensor to Digital port D2
-sensorsignal = False
 
 grovepi.pinMode(port_sensor, "INPUT")
 

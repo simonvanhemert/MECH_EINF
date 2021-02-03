@@ -10,7 +10,7 @@ import pigpio
 import time
 import grovepi
 import signal
-from Motor_Off import turn_motor_off
+from Motor_Off import Motor_Off
 
 
 """ Initialization """
@@ -21,7 +21,7 @@ def receiveSignal(signalNumber, frame):
     - and exit """
     print("Received: ", signalNumber)
     print("Exit Python!")
-    turn_motor_off()          # Turn off Stepmotor
+    Motor_Off.turn_motor_off()          # Turn off Stepmotor
     os._exit(0)
 
 # When a signal is received, activate the (above) receiveSignal method.
@@ -128,6 +128,5 @@ try:
         userinput = input("Messung wiederholen? (Press Enter for yes)")
 
 except KeyboardInterrupt:
-    # Turn off stepmotor
-    turn_motor_off()
+    Motor_Off.turn_motor_off()          # Turn off Stepmotor
     pass

@@ -46,9 +46,11 @@ while True:
     userinput = int(userinput)
 
     # Set ledbar level
-    if userinput >= 0 or userinput <= ledbar_nof_levels:
+    if userinput >= 0 and userinput <= ledbar_nof_levels:
         grovepi.ledBar_setLevel(port_ledbar, userinput)
+        print(userinput)		# Print the given value to screen
+    else:
+        print("Wert auserhalb des gültigen Bereichs")
 
-    print(userinput)		# Print the given value to screen
 
 

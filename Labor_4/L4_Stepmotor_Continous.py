@@ -8,7 +8,7 @@
 ## Import Packages
 import pigpio
 import time
-from Motor_Off import turn_motor_off
+from Motor_Off import Motor_Off
 
 
 """ Initialization """
@@ -19,7 +19,7 @@ def receiveSignal(signalNumber, frame):
     - and exit """
     print("Received: ", signalNumber)
     print("Exit Python!")
-    turn_motor_off()          # Turn off stepmotor
+    Motor_Off.turn_motor_off()          # Turn off Stepmotor
     os._exit(0)
 
 
@@ -65,7 +65,6 @@ try:
         time.sleep(steptime)    # Wait for steptime seconds
 
 except KeyboardInterrupt:
-    # Turn off stepmotor
-    turn_motor_off()
+    Motor_Off.turn_motor_off()          # Turn off Stepmotor
     pass
 

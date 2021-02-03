@@ -10,7 +10,7 @@ import pigpio
 import signal
 import grovepi
 import time
-from Motor_Off import *
+from Motor_Off import Motor_Off
 
 
 """ Initialization """
@@ -21,7 +21,7 @@ def receiveSignal(signalNumber, frame):
     - and exit """
     print("Received: ", signalNumber)
     print("Exit Python!")
-    turn_motor_off()          # Turn off DCmotor
+    Motor_Off. turn_motor_off()          # Turn off DCmotor
     os._exit(0)
 
 
@@ -146,6 +146,5 @@ try:
         time += elapsed
 
 except KeyboardInterrupt:
-    # Turn off DCmotor
-    turn_motor_off()
     pass
+Motor_Off. turn_motor_off()          # Turn off DCmotor

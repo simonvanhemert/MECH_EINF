@@ -1,4 +1,4 @@
-""" Labor 4, Umkehrspiel, MECH_EINF Module WI HSLU T&A
+""" Labor 5, Umkehrspiel, MECH_EINF Module WI HSLU T&A
     author:         Simon van Hemert
     date:           2020-04-06
     organization:   HSLU T&A """

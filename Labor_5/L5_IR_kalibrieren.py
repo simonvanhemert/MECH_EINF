@@ -8,7 +8,7 @@
 ## Import Packages
 import pigpio
 import signal
-from Motor_Off import turn_motor_off
+from Motor_Off import Motor_Off
 
 
 """ Initialization """
@@ -98,6 +98,6 @@ try:
                 towards_sensor = True     # Start moving towards sensor
 
 except KeyboardInterrupt:
-    # Turn off DCmotor
-    turn_motor_off()
     pass
+# Turn off DCmotor
+turn_motor_off()
