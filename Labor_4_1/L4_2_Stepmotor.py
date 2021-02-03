@@ -7,6 +7,7 @@
 
 ## Import Packages
 import pigpio
+import signal
 import time
 from Motor_Off import Motor_Off
 
@@ -39,8 +40,14 @@ D2 = 26     # N/ -> Turn on the motordriver A A/
 
 # Settings
 steptime = 0.001    # Time [s] for each step of stepmotor. In fact sets motor speed.
-direction = 1       # Direction [-], 0 or 1
+direction = 1      # Direction [-], 0 or 1
 
+if direction == 1:
+    step = 1
+    step_ = 0
+else:
+    step = 0
+    step_ = 1
 
 """ Run Motor """
 try:
@@ -53,16 +60,16 @@ try:
         pi1.write(A2, 1)        # Set A2 to 1/high
         time.sleep(steptime)    # Wait for steptime seconds
 
-        pi1.write(B1, 0)        # Set B1 to 0/low
-        pi1.write(B2, 1)        # Set B2 to 1/high
+        pi1.write(B1, step)     # Set B1 to 0 or 1, depending on direction
+        pi1.write(B2, step_)    # Set B2 to 0 or 1, depending on direction
         time.sleep(steptime)    # Wait for steptime seconds
 
         pi1.write(A1, 1)        # Set A1 to 1/high
         pi1.write(A2, 0)        # Set A2 to 0/low
         time.sleep(steptime)    # Wait for steptime seconds
-        
-        pi1.write(B1, 1)        # Set B1 to 1/high
-        pi1.write(B2, 0)        # Set B2 to 0/low
+
+        pi1.write(B1, step_)    # Set B1 to 0 or 1, depending on direction
+        pi1.write(B2, step)     # Set B2 to 0 or 1, depending on direction
         time.sleep(steptime)    # Wait for steptime seconds
 
 except KeyboardInterrupt:
