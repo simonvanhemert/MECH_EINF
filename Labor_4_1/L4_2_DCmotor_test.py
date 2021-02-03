@@ -8,6 +8,7 @@
 ## Import Packages
 import pigpio
 import signal
+import time
 from Motor_Off import Motor_Off
 
 
@@ -35,10 +36,15 @@ A2 = 21         # A/ or M2
 D2 = 26         # N/ -> Turn on the motordriver A A/
 
 # Settings
-voltage = 6                             # Voltage for DC motor [V] between 0 und 12 V (Voltage from power supply is always 12 V)
-direction = 1                           # Direction [-], 0 or 1
+voltage = 6         # Voltage for DC motor [V] between 0 und 12 V (Voltage from power supply is always 12 V)
+direction = 1       # Direction [-], 0 or 1
+stoptime = 1        # Pause [s] between driving back and forth . standad = 1 [s]
+drivetime = 2       # Time [s] for each step of stepmotor. standard = 2 [s]
+cycle_number = 2    # Number of cycles to go through
 
+# Initialisation
 dutycycle = round(21.25 * voltage, 0)   # Calculate PWM dutycycle from 0 (OFF) to 255 bit (FULLY ON)
+cycle = 0
 
 
 """ Run Motor """
@@ -46,21 +52,23 @@ try:
     # Turn on the motordriver -> 1
     pi1.write(D2, 1)
 
-    if direction == 0:
-        # Set PWM on A1
-        pi1.set_PWM_frequency(A1, 4000)         # Frequency of the PWM Signals [Hz] -> 4000
-        pi1.set_PWM_dutycycle(A1, dutycycle)    # Set the calculated dutycycle
-        # Set 0 on A2
-        pi1.write(A2, 0)
-    elif direction == 1:
-        # Set 0 on A1
-        pi1.write(A1, 0)                        # Set the other chanel to 0
-        # Set PWM on A2
-        pi1.set_PWM_frequency(A2, 4000)         # Frequency of the PWM Signals [Hz] -> 4000
-        pi1.set_PWM_dutycycle(A2, dutycycle)    # Set the calculated dutycycle
+    while cycle < cycle_number:         # For cycle_number cycles:
+        if direction == 0:
+            # Set PWM on A1
+            pi1.set_PWM_frequency(A1, 4000)         # Frequency of the PWM Signals [Hz] -> 4000
+            pi1.set_PWM_dutycycle(A1, dutycycle)    # Set the calculated dutycycle
+            # Set 0 on A2
+            pi1.write(A2, 0)
+        elif direction == 1:
+            # Set 0 on A1
+            pi1.write(A1, 0)                        # Set the other chanel to 0
+            # Set PWM on A2
+            pi1.set_PWM_frequency(A2, 4000)         # Frequency of the PWM Signals [Hz] -> 4000
+            pi1.set_PWM_dutycycle(A2, dutycycle)    # Set the calculated dutycycle
+        cycle += 0.5                # Increment cycle counter
+        direction = not direction   # Invert direction
+        time.sleep(stoptime)        # Wait for stoptime [s]
 
-    # Ask for any user input to Quit
-    userinput = input("Stop motor? (Press Enter for yes)")
 except KeyboardInterrupt:
     pass
 
