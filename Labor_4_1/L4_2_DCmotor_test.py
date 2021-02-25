@@ -38,8 +38,8 @@ D2 = 26         # N/ -> Turn on the motordriver A A/
 # Settings
 voltage = 6         # Voltage for DC motor [V] between 0 und 12 V (Voltage from power supply is always 12 V)
 direction = 1       # Direction [-], 0 or 1
-stoptime = 1        # Pause [s] between driving back and forth . standad = 1 [s]
-drivetime = 2       # Time [s] for each step of stepmotor. standard = 2 [s]
+stoptime = 0.5        # Pause [s] between driving back and forth . standad = 1 [s]
+drivetime = 1       # Time [s] for each step of stepmotor. standard = 2 [s]
 cycle_number = 2    # Number of cycles to go through
 
 # Initialisation
@@ -65,6 +65,12 @@ try:
             # Set PWM on A2
             pi1.set_PWM_frequency(A2, 4000)         # Frequency of the PWM Signals [Hz] -> 4000
             pi1.set_PWM_dutycycle(A2, dutycycle)    # Set the calculated dutycycle
+        time.sleep(drivetime)                       # Drive for drivetime [s]
+
+        # Turn of motor to wait:
+        pi1.write(A1, 0)
+        pi1.write(A2, 0)
+
         cycle += 0.5                # Increment cycle counter
         direction = not direction   # Invert direction
         time.sleep(stoptime)        # Wait for stoptime [s]
