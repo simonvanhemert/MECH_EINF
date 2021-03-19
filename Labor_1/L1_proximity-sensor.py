@@ -23,7 +23,7 @@ signal.signal(signal.SIGINT, receiveSignal)
 
 # Set sensor ports and settings
 port_sensor = 2     # Connect Sensor to Digital port D2
-
+sensorsignal = True
 grovepi.pinMode(port_sensor, "INPUT")
 
 
