@@ -39,19 +39,19 @@ D1 = 12     # N  -> Turn on the motordriver B B/
 D2 = 26     # N/ -> Turn on the motordriver A A/
 
 # Settings
-steptime = 0.0005    # Time [s] for each step of stepmotor. standard = 0.001 [s]
+steptime = 0.001    # Time [s] for each step of stepmotor. standard = 0.001 [s]
 direction = 1       # Direction [-], 0 or 1
 stoptime = 1        # Pause [s] between driving back and forth . standad = 1 [s]
 step_number = 2000  # Number of steps [] to drive in each direction. standard = 9600 [-]
-cycle_number = 2    # Number of cycles to go through
+cycle_number = 3    # Number of cycles to go through
 
 # Initialisation
 if direction == 1:
-    Blevel = 1
-    Blevel_ = 0
+    step = 1
+    step_ = 0
 else:
-    Blevel = 0
-    Blevel_ = 1
+    step = 0
+    step_ = 1
 
 step = 0
 cycle = 0
@@ -62,29 +62,29 @@ try:
     pi1.write(D1, 1)
     pi1.write(D2, 1)
 
-    while cycle < cycle_number:         # For cycle_number cycles:
-        while step < step_number:         # For step_number steps:
+    while cycle < cycle_number:     # For cycle_number cycles:
+        while step < step_number:   # For step_number steps:
             pi1.write(A1, 0)        # Set A1 to 0/low
             pi1.write(A2, 1)        # Set A2 to 1/high
             time.sleep(steptime)    # Wait for steptime seconds
 
-            pi1.write(B1, Blevel)   # Set B1 to 0 or 1, depending on direction
-            pi1.write(B2, Blevel_)  # Set B2 to 0 or 1, depending on direction
+            pi1.write(B1, step)      # Set B1 to 0 or 1, depending on direction
+            pi1.write(B2, step_)    # Set B2 to 0 or 1, depending on direction
             time.sleep(steptime)    # Wait for steptime seconds
 
             pi1.write(A1, 1)        # Set A1 to 1/high
             pi1.write(A2, 0)        # Set A2 to 0/low
             time.sleep(steptime)    # Wait for steptime seconds
 
-            pi1.write(B1, Blevel_)  # Set B1 to 0 or 1, depending on direction
-            pi1.write(B2, Blevel)   # Set B2 to 0 or 1, depending on direction
+            pi1.write(B1, step_)    # Set B1 to 0 or 1, depending on direction
+            pi1.write(B2, step)     # Set B2 to 0 or 1, depending on direction
             time.sleep(steptime)    # Wait for steptime [s]
 
             step += 4               # Increment step counter
         cycle += 0.5                # Increment cycle counter
         step = 0                    # Reset step counter
-        Blevel = not Blevel         # Invert direction
-        Blevel_ = not Blevel_       # Invert direction
+        step = not step             # Invert direction
+        step_ = not step_           # Invert direction
         time.sleep(stoptime)        # Wait for stoptime [s]
 
 except KeyboardInterrupt:

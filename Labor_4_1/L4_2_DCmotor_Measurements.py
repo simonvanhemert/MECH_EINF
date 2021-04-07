@@ -40,7 +40,7 @@ voltage = 6         # Voltage for DC motor [V] between 0 und 12 V (Voltage from 
 direction = 1       # Direction [-], 0 or 1
 stoptime = 0.5        # Pause [s] between driving back and forth . standad = 1 [s]
 drivetime = 1       # Time [s] for each step of stepmotor. standard = 2 [s]
-cycle_number = 2    # Number of cycles to go through
+cycle_number = 3    # Number of cycles to go through
 
 # Initialisation
 dutycycle = round(21.25 * voltage, 0)   # Calculate PWM dutycycle from 0 (OFF) to 255 bit (FULLY ON)
