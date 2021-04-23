@@ -47,7 +47,7 @@ while True:
 
     # Find the appropriate number of LEDs, set to 0 if out of range.
     if dist <= range_max:
-        lvl = int((range_max - dist) * (ledbar_nof_levels / range_max))
+        lvl = int(- (ledbar_nof_levels / range_max) * dist + ledbar_nof_levels)
     else:
         lvl = 0
 
