@@ -53,7 +53,7 @@ else:
     step = 0
     step_ = 1
 
-step = 0
+steps = 0
 cycle = 0
 
 """ Run Motor """
@@ -63,7 +63,7 @@ try:
     pi1.write(D2, 1)
 
     while cycle < cycle_number:     # For cycle_number cycles:
-        while step < step_number:   # For step_number steps:
+        while steps < step_number:   # For step_number steps:
             pi1.write(A1, 0)        # Set A1 to 0/low
             pi1.write(A2, 1)        # Set A2 to 1/high
             time.sleep(steptime)    # Wait for steptime seconds
@@ -80,9 +80,9 @@ try:
             pi1.write(B2, step)     # Set B2 to 0 or 1, depending on direction
             time.sleep(steptime)    # Wait for steptime [s]
 
-            step += 4               # Increment step counter
+            steps += 4               # Increment step counter
         cycle += 0.5                # Increment cycle counter
-        step = 0                    # Reset step counter
+        steps = 0                    # Reset step counter
         step = not step             # Invert direction
         step_ = not step_           # Invert direction
         time.sleep(stoptime)        # Wait for stoptime [s]
