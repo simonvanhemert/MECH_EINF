@@ -5,6 +5,8 @@
 
 ## Import Packages
 import pigpio
+import os
+
 
 class Motor_Off:
     """ Class to correctly turn of the DC motor oder Stepper motor """

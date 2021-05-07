@@ -6,6 +6,7 @@
 # TODO !!! Vor dem eigentlichen Starten des Programmes muss zuerst folgender Befehl ausgefuehrt werden: sudo pigpiod
 
 ## Import Packages
+import os
 import pigpio
 import signal
 import time
