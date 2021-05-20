@@ -11,7 +11,7 @@ import signal
 import time
 from Motor_Off import Motor_Off
 import grovepi
-
+import os
 
 """ Initialization """
 def receiveSignal(signalNumber, frame):

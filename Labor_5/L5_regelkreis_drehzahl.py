@@ -11,6 +11,7 @@ import signal
 import grovepi
 import time
 from Motor_Off import Motor_Off
+import os
 
 
 """ Initialization """
@@ -90,23 +91,24 @@ try:
             sensor_value_total += sensor_value
             i += 1
 
-            # Find average voltage
-            sensor_value_average = sensor_value_total / nmeasurement
+        # Find average voltage
+        sensor_value_average = sensor_value_total / nmeasurement
 
-            # Convert measurement to voltage
-            voltage = round(float(sensor_value_average) * adc_ref / 1024, 4)
+        # Convert measurement to voltage
+        voltage = round(float(sensor_value_average) * adc_ref / 1024, 4)
 
-            # Calculate distance using sensor characteristics, coefficients found from calibration
-            is_distance = round(44.593 * voltage * voltage - 152.73 * voltage + 159.38, 4)
+        # Calculate distance using sensor characteristics, coefficients found from calibration
+        is_distance = round(44.593 * voltage * voltage - 152.73 * voltage + 159.38, 4)
 
-            print("ist:   " + str(is_distance) + " mm")
-            print("soll:  " + str(set_distance) + " mm")
+        print("ist:   " + str(is_distance) + " mm")
+        print("soll:  " + str(set_distance) + " mm")
 
         """ Compare current and set distance and set the motor accordingly """
         delta_distance = set_distance - is_distance  # Control error
         print("delta: " + str(delta_distance) + " mm")
 
         speed = delta_distance * k   # Multiply the found distance [mm] with the amplification k [mm^-1]
+        direction = speed
         speed = abs(speed)          # speed in range 0-255 [] is always positive
 
         # Set speed by Duty cycle, between 0 und 255
@@ -123,11 +125,11 @@ try:
         # Turn on the motordriver -> 1
         pi1.write(D2, 1)
         # Set PWM depending on direction of rotation
-        if speed > 0:
+        if direction > 0:
             pi1.set_PWM_frequency(A1, 4000)
             pi1.set_PWM_dutycycle(A1, dutycycle)  # PWM from 0 (OFF) to 255 (FULLY ON)
             pi1.write(A2, 0)
-        if speed < 0:
+        if direction < 0:
             pi1.write(A1, 0)
             pi1.set_PWM_frequency(A2, 4000)
             pi1.set_PWM_dutycycle(A2, dutycycle)  # PWM from 0 (OFF) to 255 (FULLY ON)
