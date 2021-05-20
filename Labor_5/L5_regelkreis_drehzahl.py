@@ -66,7 +66,7 @@ filename = "/home/stud/Desktop/wegdiagramm_drehzahl" \
            + ".csv"
 csvresult = open(filename, "w")                                 # Open and (over-)write ("w") file
 csvresult.write("k= " + str(k) + "nmeasurement= " + str(nmeasurement) + "waittime= " + str(waittime)
-                + "offset= " + str(offset) + "set_distance= " + set_distance + "; " + "\n")     # Write set constants
+                + "offset= " + str(offset) + "set_distance= " + str(set_distance) + "; " + "\n")     # Write set constants
 csvresult.write("time (s); ist_distanz (mm)" + "\n")            # Write titles
 csvresult.close()                                               # Close file
 
