@@ -61,7 +61,7 @@ userinput = input("Auf welche Distanz soll gefahren werden? \nWert zwischen 30 m
 set_distance = float(userinput)
 
 # Save results in CSV File
-filename = "/home/stud/mech/wegdiagramm_drehzahl" \
+filename = "/home/stud/Desktop/wegdiagramm_drehzahl" \
            + str(time.asctime(time.localtime(time.time()))).replace(":", "_") \
            + ".csv"
 csvresult = open(filename, "w")                                 # Open and (over-)write ("w") file
@@ -71,7 +71,7 @@ csvresult.write("time (s); ist_distanz (mm)" + "\n")            # Write titles
 csvresult.close()                                               # Close file
 
 # Set time to 0
-time = 0
+currenttime = 0
 
 
 """ Control loop """
@@ -104,9 +104,9 @@ try:
 
         """ Compare current and set distance and set the motor accordingly """
         delta_distance = set_distance - is_distance  # Control error
-        print("delta: " + str(delta_distanz) + " mm")
+        print("delta: " + str(delta_distance) + " mm")
 
-        speed = delta_distanz * k   # Multiply the found distance [mm] with the amplification k [mm^-1]
+        speed = delta_distance * k   # Multiply the found distance [mm] with the amplification k [mm^-1]
         speed = abs(speed)          # speed in range 0-255 [] is always positive
 
         # Set speed by Duty cycle, between 0 und 255
@@ -137,13 +137,13 @@ try:
 
         """ Save position and time """
         csvresult = open(filename, "a")                 # Open and append ("a") file
-        csvresult.write(str(round(time, 4)) + ";" + str(round(is_distance, 4)) + "\n")  # Write one line of data
+        csvresult.write(str(round(currenttime, 4)) + ";" + str(round(is_distance, 4)) + "\n")  # Write one line of data
         csvresult.close()                               # Close the file
 
 
         """ Measure elapsed time """
         elapsed = time.time() - starttime
-        time += elapsed
+        currenttime += elapsed
 
 except KeyboardInterrupt:
     pass
