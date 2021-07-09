@@ -58,7 +58,7 @@ offset = 10             # Standard = 10
 
 """ Initialize """
 # Ask for the Set-distance
-userinput = input("Auf welche Distanz soll gefahren werden? \nWert zwischen 30 mm und 60 mm: ")
+userinput = input("Auf welche Distanz soll gefahren werden? \nWert zwischen 20 mm und 70 mm: ")
 set_distance = float(userinput)
 
 # Save results in CSV File
